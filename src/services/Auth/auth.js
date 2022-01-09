@@ -1,27 +1,40 @@
-import { sign } from "crypto";
 import {
   getAuth,
-  signInWithEmailPassword,
+  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 class AuthService {
   constructor() {
     this.signedIn = false;
+    this.onAuthStateChanged = null;
     onAuthStateChanged(getAuth(), (user) => {
       if (user) {
         this.signedIn = true;
       } else {
         this.signedIn = false;
       }
+      if (this.onAuthStateChanged != null) this.onAuthStateChanged();
     });
   }
-  async getCurrentUser() {
-    return getAuth().currentUser;
+  async attachOnAuthChanged(callback) {
+    this.onAuthStateChanged = callback;
+  }
+  getCurrentUser() {
+    return new Promise((resolve, reject) => {
+      try {
+        var user = getAuth().currentUser;
+        if (user) resolve(user);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
   async signIn(email, password) {
     const auth = getAuth();
     try {
-      let userCredential = await createUserWithEmailAndPassword(
+      let userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password

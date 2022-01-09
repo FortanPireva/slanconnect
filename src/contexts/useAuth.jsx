@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import authService from "../services/Auth/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
@@ -31,30 +31,28 @@ export function AuthProvider({ children }) {
       .finally(() => setLoadingInitial(false));
   });
 
-  function login(email, password) {
+  async function login(email, password) {
     setLoading(true);
 
-    authService
-      .signIn(email, password)
-      .then((user) => {
-        setUser(user);
-        navigate("/");
-      })
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
+    let user = await authService.signIn(email, password);
+    if (!user) {
+      setError(error);
+    } else {
+      setUser(user);
+      navigate("/");
+    }
+    setLoading(false);
   }
-  function signup(email, password) {
+  async function signup(email, password) {
     setLoading(true);
-    authService
-      .signup(email, password)
-      .then((user) => {
-        setUser(user);
-        navigate("/");
-      })
-      .catch((err) => {
-        setError(err);
-      })
-      .finally(() => setLoading(false));
+    let user = await authService.signup(email, password);
+    if (!user) {
+      setError(error);
+    } else {
+      setUser(user);
+      navigate("/");
+    }
+    setLoading(false);
   }
   function logout() {
     authService.logout().then(() => setUser(undefined));
@@ -76,7 +74,7 @@ export function AuthProvider({ children }) {
       error,
       login,
       logout,
-      signUp,
+      signup,
     }),
     [user, loading, error]
   );

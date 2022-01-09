@@ -1,4 +1,12 @@
+import { Link } from "react-router-dom";
+import useAuth from "../../contexts/useAuth";
 export default function Login() {
+  const { login } = useAuth();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    login(formData.get("email"), formData.get("password"));
+  };
   return (
     <>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -22,7 +30,7 @@ export default function Login() {
               </a>
             </p>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -88,6 +96,16 @@ export default function Login() {
               >
                 Sign in
               </button>
+            </div>
+            <div className="flex justify-start items-center">
+              <p>Don't have an account?</p>
+
+              <Link
+                to="/register"
+                className="ml-2 border border-transparent rounded-md shadow-sm text-base font-medium text-indigo-600 "
+              >
+                Sign up
+              </Link>
             </div>
           </form>
         </div>
