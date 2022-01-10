@@ -1,6 +1,6 @@
-export default function AppButton({ children, onClick, classes }) {
+export default function AppButton({ children, onClick, className }) {
   return (
-    <button onClick={onClick} className={classes}>
+    <button onClick={onClick} className={className}>
       {children}
     </button>
   );

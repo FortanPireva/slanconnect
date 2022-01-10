@@ -10,7 +10,7 @@ export default function Post(props) {
     <div className=" my-3 mx-2 max-w-md mx-auto bg-white rounded-xl i">
       <div className="p-3 post-header flex-row flex justify-start pl-2 items-center">
         <img
-          class="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+          className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
           src={post.userInfo.avatarUrl}
           alt=""
         />
@@ -32,7 +32,7 @@ export default function Post(props) {
         <div className="footer flex flex-row justify-between w-full">
           <AppButton
             onClick={() => onActionClick(post.id, "LIKE")}
-            classes="bg-white p-3 flex-1 hover:bg-gray-100 flex justify-around items-center"
+            className="bg-white p-3 flex-1 hover:bg-gray-100 flex justify-around items-center"
           >
             {" "}
             <BiLike />
@@ -42,7 +42,7 @@ export default function Post(props) {
           </AppButton>
           <AppButton
             onClick={() => onActionClick(post.id, "COMMENT")}
-            classes="bg-white p-3  flex-1 hover:bg-gray-100 flex justify-around items-center"
+            className="bg-white p-3  flex-1 hover:bg-gray-100 flex justify-around items-center"
           >
             {" "}
             <BiLike />{" "}
@@ -52,7 +52,7 @@ export default function Post(props) {
           </AppButton>
           <AppButton
             onClick={() => onActionClick(post.id, "SHARE")}
-            classes="bg-white p-3 flex-1 hover:bg-gray-100 flex justify-around items-center"
+            className="bg-white p-3 flex-1 hover:bg-gray-100 flex justify-around items-center"
           >
             {" "}
             <BiLike />{" "}

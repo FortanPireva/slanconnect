@@ -26,15 +26,32 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     authService
       .getCurrentUser()
-      .then((user) => setUser(user))
+      .then((user) => {
+        console.log(user);
+        setUser(user);
+      })
       .catch((_) => {})
       .finally(() => setLoadingInitial(false));
-  });
+  }, []);
 
   async function login(email, password) {
     setLoading(true);
 
     let user = await authService.signIn(email, password);
+    if (!user) {
+      setError(error);
+    } else {
+      setUser(user);
+      navigate("/");
+    }
+    setLoading(false);
+  }
+
+  async function loginWithGoogle() {
+    debugger;
+    setLoading(true);
+
+    let user = await authService.signInWithGoogle();
     if (!user) {
       setError(error);
     } else {
@@ -75,6 +92,7 @@ export function AuthProvider({ children }) {
       login,
       logout,
       signup,
+      loginWithGoogle,
     }),
     [user, loading, error]
   );

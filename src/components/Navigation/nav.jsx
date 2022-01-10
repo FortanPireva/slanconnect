@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../contexts/useAuth";
+import UserDropDown from "../User/UserDropDown";
 
 export default function Nav() {
-  const { user } = useAuth();
+  const { user, signout } = useAuth();
   return (
     <div>
       <nav className="flex flex-row justify-around p-3">
@@ -24,7 +25,7 @@ export default function Nav() {
               Sign In
             </Link>
           ) : (
-            <h1>Hi {user.providerData[0].email}</h1>
+            <UserDropDown />
           )}
         </div>
       </nav>
