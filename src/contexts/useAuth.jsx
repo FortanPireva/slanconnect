@@ -22,8 +22,11 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (error) setError(null);
   }, [location.pathname]);
-
+  function onAuthChanged(user) {
+    if (user) setUser(user);
+  }
   useEffect(() => {
+    authService.attachOnAuthChanged(onAuthChanged);
     authService
       .getCurrentUser()
       .then((user) => {
@@ -74,16 +77,6 @@ export function AuthProvider({ children }) {
   function logout() {
     authService.logout().then(() => setUser(undefined));
   }
-
-  // Make the provider update only when it should.
-  // We only want to force re-renders if the user,
-  // loading or error states change.
-  //
-  // Whenever the `value` passed into a provider changes,
-  // the whole tree under the provider re-renders, and
-  // that can be very costly! Even in this case, where
-  // you only get re-renders when logging in and out
-  // we want to keep things very performant.
   const memoedValue = useMemo(
     () => ({
       user,

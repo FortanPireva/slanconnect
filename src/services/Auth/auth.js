@@ -18,7 +18,7 @@ class AuthService {
       } else {
         this.signedIn = false;
       }
-      if (this.onAuthStateChanged != null) this.onAuthStateChanged();
+      if (this.onAuthStateChanged != null) this.onAuthStateChanged(user);
     });
   }
   async signInWithGoogle() {
@@ -47,7 +47,8 @@ class AuthService {
   getCurrentUser() {
     return new Promise((resolve, reject) => {
       try {
-        var user = getAuth().currentUser;
+        debugger;
+        let user = getAuth().currentUser;
         resolve(user);
       } catch (error) {
         reject(error);
@@ -92,6 +93,7 @@ class AuthService {
     }
   }
   isSignedIn() {
+    if (this.signedIn) return true;
     this.isSignedIn = getAuth().currentUser ? true : false;
     return this.isSignedIn;
   }
