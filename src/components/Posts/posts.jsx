@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
+import useAuth from "../../contexts/useAuth";
+import CreatePost from "./createPost";
 import Post from "./post";
+import postRepository from "../../services/Database/postRepository";
+import { uploadImage } from "../../services/Storage/storage";
 const newposts = [
   {
     id: 1,
@@ -67,8 +71,35 @@ const newposts = [
 ];
 
 export default function Posts() {
+  const { user } = useAuth();
   const [posts, setPosts] = useState([]);
 
+  // create a post
+  async function createPost(postDto) {
+    try {
+      let post = {
+        description: postDto.description,
+      };
+      post.images = [];
+      for (let i = 0; i < postDto.selectedFiles.length; i++) {
+        const file = postDto.selectedFiles[i];
+        let downloadUrl = await uploadImage(file);
+        post.images.push(downloadUrl);
+      }
+      post.user = {
+        uid: user.uid,
+        email: user.email,
+        photoURL: user.photoURL,
+        displayName: user.displayName,
+      };
+      let postRef = await postRepository.addPost(post);
+      if (!postRef) {
+        console.log("Couldn't get postRef");
+      }
+    } catch (err) {
+      alert("Couldn't post ", err);
+    }
+  }
   const handleButtonClick = (id, type) => {
     const post = posts.find((p) => p.id === id);
     if (!post) return;
@@ -94,13 +125,27 @@ export default function Posts() {
     });
   };
   useEffect(() => {
-    setPosts(newposts);
+    (async function doWorkAsync() {
+      const newposts = await postRepository.getPosts();
+      console.log(newposts);
+      debugger;
+      if (newposts) {
+        setPosts(newposts.map((post) => ({ id: post.id, ...post.data })));
+      }
+    })();
   }, []);
   return (
-    <div className="posts bg-gray-200 flex flex-col justify-center items-center">
-      {posts.map((post) => (
-        <Post key={post.id} post={post} onActionClick={handleButtonClick} />
-      ))}
-    </div>
+    <>
+      <div className="posts bg-gray-200 flex flex-col justify-center items-center">
+        {user && <CreatePost createPost={createPost} />}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <Post key={post.id} post={post} onActionClick={handleButtonClick} />
+          ))
+        ) : (
+          <h1>No posts to show</h1>
+        )}
+      </div>
+    </>
   );
 }
