@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 export default function ImagePreviewer({ imageSources }) {
   const count = imageSources.length > 3 ? 3 : imageSources.length;
@@ -16,6 +16,10 @@ export default function ImagePreviewer({ imageSources }) {
   };
 
   const [showCarousel, setShowCarousel] = useState(false);
+  useEffect(() => {
+    if (showCarousel) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "unset";
+  }, [showCarousel]);
   return (
     <div className="flex justify-center items-center">
       <div className={styles.grid[count]}>

@@ -143,7 +143,7 @@ export default function Posts() {
     );
   return (
     <>
-      <div className="posts bg-gray-200 flex flex-col justify-center items-center">
+      <div className="posts bg-gray-200 flex flex-col justify-center items-center dark:bg-gray-800">
         {user && <CreatePost createPost={createPost} />}
         {posts.length > 0 ? (
           posts.map((post) => (
