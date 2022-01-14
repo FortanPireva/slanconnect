@@ -17,7 +17,7 @@ export default function Login() {
   };
   return (
     <>
-      <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 dark:bg-gray-800">
         <div className="max-w-md w-full space-y-2">
           <div>
             <img
@@ -25,7 +25,7 @@ export default function Login() {
               src="./icon.png"
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-100">
               Sign in to your account
             </h2>
           </div>
@@ -42,7 +42,7 @@ export default function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-500 placeholder-gray-500 text-gray-900 dark:bg-gray-700 dark:text-white rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                 />
               </div>
@@ -56,7 +56,7 @@ export default function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-500 placeholder-gray-500 text-gray-900 dark:bg-gray-700 dark:text-white rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
               </div>
@@ -72,7 +72,7 @@ export default function Login() {
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="ml-2 block text-sm text-gray-900 dark:text-gray-200"
                 >
                   Remember me
                 </label>
@@ -81,7 +81,7 @@ export default function Login() {
               <div className="text-sm">
                 <a
                   href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                  className="font-medium text-indigo-600 hover:text-indigo-500 "
                 >
                   Forgot your password?
                 </a>
@@ -98,17 +98,21 @@ export default function Login() {
             </div>
           </form>
           <div className="mt-0">
-            <p className=" text-center text-sm text-gray-600">Or </p>
+            <p className=" text-center text-sm text-gray-600 dark:text-gray-200 mb-2">
+              Or{" "}
+            </p>
             <AppButton
               type="button"
               onClick={() => loginWithGoogle()}
-              className="group relative w-full flex justify-center py-2 px-4   text-sm font-medium rounded-md text-black  border  bg-gray-50 hover:shadow-md  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full flex justify-center py-2 px-4   text-sm font-medium rounded-md text-black  border  bg-gray-50 bg-gray-50 dark:text-white dark:bg-gray-900 hover:shadow-md  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <FcGoogle className="mr-2" size={"1.5em"} />{" "}
               <span> Sign in with Google</span>
             </AppButton>
             <div className="flex justify-start items-center mt-2">
-              <p>Forgot password?</p>
+              <p className="text-gray-800 dark:text-gray-300">
+                Forgot password?
+              </p>
 
               <Link
                 to="/reset"
@@ -118,7 +122,9 @@ export default function Login() {
               </Link>
             </div>
             <div className="flex justify-start items-center mt-2">
-              <p>Don't have an account?</p>
+              <p className="text-gray-800 dark:text-gray-300">
+                Don't have an account?
+              </p>
 
               <Link
                 to="/register"
