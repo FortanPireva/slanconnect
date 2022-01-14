@@ -6,13 +6,17 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  sendPasswordResetEmail,
 } from "firebase/auth";
+import { BiReplyAll } from "react-icons/bi";
 class AuthService {
   constructor() {
     this.signedIn = false;
     this.onAuthStateChanged = null;
 
     onAuthStateChanged(getAuth(), (user) => {
+      debugger;
+      console.log("user");
       if (user) {
         this.signedIn = true;
       } else {
@@ -90,6 +94,35 @@ class AuthService {
       return userCredential.user;
     } catch (error) {
       console.error("Couldn't sign up user ", error);
+    }
+  }
+  async sendPasswordResetEmail(email) {
+    const auth = getAuth();
+    try {
+      await sendPasswordResetEmail(auth, email);
+      return {
+        message: "Password reset email sent.Please check your inbox",
+        success: true,
+        error: null,
+      };
+    } catch (error) {
+      let errorMessage = "";
+      switch (error.code) {
+        case "auth/invalid-email":
+          errorMessage = "Invalid email";
+          break;
+        case "auth/user-not-found":
+          errorMessage = "User not found";
+          break;
+        default:
+          errorMessage = error;
+          break;
+      }
+      return {
+        message: null,
+        success: false,
+        error: errorMessage.toString(),
+      };
     }
   }
   isSignedIn() {

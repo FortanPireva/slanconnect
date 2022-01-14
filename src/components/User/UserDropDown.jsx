@@ -8,7 +8,7 @@ function classNames(...classes) {
 }
 
 export default function UserDropDown() {
-  const { user, signout } = useAuth();
+  const { user, logout } = useAuth();
   console.log(user);
   const [showDropdown, setShowDropdown] = useState(false);
   return (
@@ -53,7 +53,7 @@ export default function UserDropDown() {
               tabindex="-1"
               id="menu-item-0"
             >
-              Account settings
+              Profile
             </a>
             <a
               href="#"
@@ -73,18 +73,19 @@ export default function UserDropDown() {
             >
               License
             </a>
-            <form role="none">
-              <AppButton
-                onClick={() => signout()}
-                type="submit"
-                className="text-gray-700 block w-full text-left px-4 py-2 text-sm hover:bg-gray-200"
-                role="menuitem"
-                tabIndex="-1"
-                id="menu-item-3"
-              >
-                Sign out
-              </AppButton>
-            </form>
+            <AppButton
+              onClick={(e) => {
+                e.preventDefault();
+                logout();
+              }}
+              type="button"
+              className="text-gray-700 block w-full text-left px-4 py-2 text-sm hover:bg-gray-200"
+              role="menuitem"
+              tabIndex="-1"
+              id="menu-item-3"
+            >
+              Sign out
+            </AppButton>
           </div>
         </div>
       )}
