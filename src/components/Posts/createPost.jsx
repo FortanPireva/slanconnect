@@ -35,7 +35,7 @@ export default function CreatePost(props) {
     return () => imageSources.forEach((source) => URL.revokeObjectURL(source));
   }, [selectedFiles]);
   return (
-    <div className="mt-4 max-w-lg w-full mx-auto  bg-gray-100 dark:bg-dark">
+    <div className="mt-4 max-w-lg w-full mx-auto  bg-gray-100 dark:bg-gray-900 dark:bg-dark">
       <form action="" onSubmit={handleCreatePost}>
         <textarea
           name="description"
@@ -50,8 +50,12 @@ export default function CreatePost(props) {
           text-base
           font-normal
           text-gray-700
-          bg-white bg-clip-padding
+          bg-white
+          dark:bg-zinc-900
+            dark:text-white          
+          bg-clip-padding
           border border-solid border-gray-300
+          dark:border-gray-600
           rounded
           transition
           ease-in-out

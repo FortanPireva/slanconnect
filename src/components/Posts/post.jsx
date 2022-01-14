@@ -12,11 +12,11 @@ export default function Post(props) {
     return t;
   }
   return (
-    <div className="container max-w-lg   my-3 mx-3 bg-white  dark:bg-dark rounded-xl ">
+    <div className="container max-w-lg    my-3 mx-3 bg-white  dark:bg-gray-900 rounded-xl ">
       <div className="p-3 post-header flex-row flex justify-start pl-2 items-center">
         {post.user.photoURL ? (
           <img
-            className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+            className="inline-block h-8 w-8 rounded-full ring-2 ring-white "
             src={post.user.photoURL}
             alt=""
           />
@@ -28,7 +28,7 @@ export default function Post(props) {
           </div>
         )}
 
-        <div className="pl-2 flex flex-col">
+        <div className="pl-2 flex flex-col dark:text-white">
           <p className="text-sm  p-0">
             {post.user.displayName ||
               post.user.email.substring(0, post.user.email.indexOf("@"))}
@@ -44,12 +44,14 @@ export default function Post(props) {
         </div>
       </div>
       <div className="content overflow-hidden">
-        <div className="description p-2">{post.description}</div>
+        <div className="description p-2 dark:text-white">
+          {post.description}
+        </div>
         {post.images && <ImagePreviewer imageSources={post.images} />}
-        <div className="footer flex flex-row justify-between w-full">
+        <div className="footer flex flex-row justify-between w-full ">
           <AppButton
             onClick={() => onActionClick(post.id, "LIKE")}
-            className="bg-white p-3 flex-1 hover:bg-gray-100 flex justify-around items-center"
+            className="bg-white dark:bg-gray-900 p-3 flex-1 dark:text-white hover:bg-gray-100 flex justify-around items-center"
           >
             {" "}
             <BiLike />
@@ -59,7 +61,7 @@ export default function Post(props) {
           </AppButton>
           <AppButton
             onClick={() => onActionClick(post.id, "COMMENT")}
-            className="bg-white p-3  flex-1 hover:bg-gray-100 flex justify-around items-center"
+            className="bg-white p-3 dark:bg-gray-900  flex-1 dark:text-white hover:bg-gray-100 flex justify-around items-center"
           >
             {" "}
             <BiLike />{" "}
@@ -69,11 +71,11 @@ export default function Post(props) {
           </AppButton>
           <AppButton
             onClick={() => onActionClick(post.id, "SHARE")}
-            className="bg-white p-3 flex-1 hover:bg-gray-100 flex justify-around items-center"
+            className="bg-white p-3 dark:bg-gray-900 flex-1 dark:text-white hover:bg-gray-100  flex justify-around items-center"
           >
             {" "}
             <BiLike />{" "}
-            <span className="ml-1">
+            <span className="ml-1 ">
               {post.shares} Share{post.shares > 1 ? "s" : ""}
             </span>
           </AppButton>
