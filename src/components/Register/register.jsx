@@ -1,7 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../contexts/useAuth";
+import { FcGoogle } from "react-icons/fc";
+import AppButton from "../AppButton/AppButton";
+import { useEffect } from "react";
+
 export default function Register() {
-  const { signup } = useAuth();
+  const { signup, loginWithGoogle, loading, user } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (loading) return;
+    if (user) navigate("/");
+  }, [user, loading]);
+
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -88,15 +98,26 @@ export default function Register() {
                 Sign Up
               </button>
             </div>
-            <div className="flex justify-start items-center">
-              <p>Already have an account?</p>
-
-              <Link
-                to="/login"
-                className="ml-2 border border-transparent rounded-md shadow-sm text-base font-medium text-indigo-600 "
+            <div className="mt-0">
+              <p className=" text-center text-sm text-gray-600">Or </p>
+              <AppButton
+                type="button"
+                onClick={() => loginWithGoogle()}
+                className="group relative w-full flex justify-center py-2 px-4   text-sm font-medium rounded-md text-black  border  bg-gray-50 hover:shadow-md  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Sign In
-              </Link>
+                <FcGoogle className="mr-2" size={"1.5em"} />{" "}
+                <span> Sign Up with Google</span>
+              </AppButton>
+              <div className="flex justify-start items-center mt-2">
+                <p>Already have an account??</p>
+
+                <Link
+                  to="/login"
+                  className="ml-2 border border-transparent rounded-md shadow-sm text-base font-medium text-indigo-600 "
+                >
+                  Sign In
+                </Link>
+              </div>
             </div>
           </form>
         </div>

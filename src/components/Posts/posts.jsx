@@ -4,6 +4,7 @@ import CreatePost from "./createPost";
 import Post from "./post";
 import postRepository from "../../services/Database/postRepository";
 import { uploadImage } from "../../services/Storage/storage";
+import ReactLoading from "react-loading";
 const newposts = [
   {
     id: 1,
@@ -73,7 +74,7 @@ const newposts = [
 export default function Posts() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   // create a post
   async function createPost(postDto) {
     try {
@@ -126,14 +127,20 @@ export default function Posts() {
   };
   useEffect(() => {
     (async function doWorkAsync() {
+      setLoading(true);
       const newposts = await postRepository.getPosts();
-      console.log(newposts);
-      debugger;
       if (newposts) {
         setPosts(newposts.map((post) => ({ id: post.id, ...post.data })));
       }
+      setLoading(false);
     })();
   }, []);
+  if (loading)
+    return (
+      <div className="container mx-auto   flex flex-col justify-center items-center max-h-full">
+        <ReactLoading type="spin" color="#000" />
+      </div>
+    );
   return (
     <>
       <div className="posts bg-gray-200 flex flex-col justify-center items-center">

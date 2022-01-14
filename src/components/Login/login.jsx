@@ -1,9 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../contexts/useAuth";
 import AppButton from "../AppButton/AppButton";
 import { FcGoogle } from "react-icons/fc";
+import { useEffect } from "react";
 export default function Login() {
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, user, loading } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (loading) return;
+    if (user) navigate("/");
+  }, [user, loading]);
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);

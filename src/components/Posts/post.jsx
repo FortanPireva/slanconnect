@@ -12,7 +12,7 @@ export default function Post(props) {
     return t;
   }
   return (
-    <div className=" my-3 mx-2 max-w-lg mx-auto bg-white rounded-xl i">
+    <div className="container max-w-lg   my-3 mx-3 bg-white  dark:bg-dark rounded-xl ">
       <div className="p-3 post-header flex-row flex justify-start pl-2 items-center">
         {post.user.photoURL ? (
           <img

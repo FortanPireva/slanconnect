@@ -13,6 +13,8 @@ class AuthService {
     this.onAuthStateChanged = null;
 
     onAuthStateChanged(getAuth(), (user) => {
+      debugger;
+      console.log("user");
       if (user) {
         this.signedIn = true;
       } else {

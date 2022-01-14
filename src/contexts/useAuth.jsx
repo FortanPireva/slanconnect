@@ -24,17 +24,18 @@ export function AuthProvider({ children }) {
   }, [location.pathname]);
   function onAuthChanged(user) {
     if (user) setUser(user);
+    setLoadingInitial(false);
   }
   useEffect(() => {
     authService.attachOnAuthChanged(onAuthChanged);
-    authService
-      .getCurrentUser()
-      .then((user) => {
-        console.log(user);
-        setUser(user);
-      })
-      .catch((_) => {})
-      .finally(() => setLoadingInitial(false));
+    // authService
+    //   .getCurrentUser()
+    //   .then((user) => {
+    //     console.log(user);
+    //     setUser(user);
+    //   })
+    //   .catch((_) => {})
+    //   .finally(() => setLoadingInitial(false));
   }, []);
 
   async function login(email, password) {
@@ -75,7 +76,7 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }
   function logout() {
-    authService.logout().then(() => setUser(undefined));
+    authService.signout().then(() => setUser(undefined));
   }
   const memoedValue = useMemo(
     () => ({
