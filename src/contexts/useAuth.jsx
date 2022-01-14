@@ -64,6 +64,15 @@ export function AuthProvider({ children }) {
     }
     setLoading(false);
   }
+  async function sendPasswordResetEmail(email) {
+    let result = await authService.sendPasswordResetEmail(email);
+    if (result.success) {
+      setError(null);
+      return result.message;
+    }
+    setError(result.error);
+    return null;
+  }
   async function signup(email, password) {
     setLoading(true);
     let user = await authService.signup(email, password);
@@ -87,6 +96,7 @@ export function AuthProvider({ children }) {
       logout,
       signup,
       loginWithGoogle,
+      sendPasswordResetEmail,
     }),
     [user, loading, error]
   );

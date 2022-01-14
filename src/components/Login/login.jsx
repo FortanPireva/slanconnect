@@ -22,7 +22,7 @@ export default function Login() {
           <div>
             <img
               className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+              src="./icon.png"
               alt="Workflow"
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -107,6 +107,16 @@ export default function Login() {
               <FcGoogle className="mr-2" size={"1.5em"} />{" "}
               <span> Sign in with Google</span>
             </AppButton>
+            <div className="flex justify-start items-center mt-2">
+              <p>Forgot password?</p>
+
+              <Link
+                to="/reset"
+                className="ml-2 border border-transparent rounded-md shadow-sm text-base font-medium text-indigo-600 "
+              >
+                Reset
+              </Link>
+            </div>
             <div className="flex justify-start items-center mt-2">
               <p>Don't have an account?</p>
 

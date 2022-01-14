@@ -8,6 +8,7 @@ import { AuthProvider } from "./contexts/useAuth";
 import useAuth from "./contexts/useAuth";
 import { NotFound } from "./components/NotFound";
 import ReactLoading from "react-loading";
+import { ResetPassword } from "./components/ResetPassword";
 function RequireAuth(props) {
   const { user, loading } = useAuth();
 
@@ -29,6 +30,7 @@ function App() {
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/reset" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
