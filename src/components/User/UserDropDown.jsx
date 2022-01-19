@@ -39,7 +39,7 @@ export default function UserDropDown() {
       </div>
       {showDropdown && (
         <div
-          class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800  ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
@@ -48,7 +48,7 @@ export default function UserDropDown() {
           <div class="py-1" role="none">
             <a
               href="#"
-              class="text-gray-700 block px-4 py-2 text-sm"
+              class="text-gray-700 block px-4 py-2 text-sm dark:text-white"
               role="menuitem"
               tabindex="-1"
               id="menu-item-0"
@@ -57,7 +57,7 @@ export default function UserDropDown() {
             </a>
             <a
               href="#"
-              class="text-gray-700 block px-4 py-2 text-sm"
+              class="text-gray-700 block px-4 py-2 text-sm dark:text-white"
               role="menuitem"
               tabindex="-1"
               id="menu-item-1"
@@ -66,7 +66,7 @@ export default function UserDropDown() {
             </a>
             <a
               href="#"
-              class="text-gray-700 block px-4 py-2 text-sm"
+              class="text-gray-700 block px-4 py-2 text-sm dark:text-white"
               role="menuitem"
               tabindex="-1"
               id="menu-item-2"
@@ -79,7 +79,7 @@ export default function UserDropDown() {
                 logout();
               }}
               type="button"
-              className="text-gray-700 block w-full text-left px-4 py-2 text-sm hover:bg-gray-200"
+              className="text-gray-700 block w-full text-left px-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-white"
               role="menuitem"
               tabIndex="-1"
               id="menu-item-3"
