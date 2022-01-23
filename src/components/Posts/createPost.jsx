@@ -14,11 +14,15 @@ export default function CreatePost(props) {
   }
   function handleCreatePost(event) {
     event.preventDefault();
-    debugger;
     props.createPost({
       description,
       selectedFiles,
     });
+    setTimeout(() => {
+      setDescription("");
+      setselectedFiles([]);
+      setImageSources([]);
+    }, 2000);
   }
   useEffect(() => {
     if (!selectedFiles.count == 0) {
@@ -64,6 +68,7 @@ export default function CreatePost(props) {
         "
           rows="5"
           placeholder="Write something"
+          value={description}
         ></textarea>
         {imageSources.length > 0 && (
           <ImagePreviewer imageSources={imageSources} />

@@ -5,79 +5,25 @@ import Post from "./post";
 import postRepository from "../../services/Database/postRepository";
 import { uploadImage } from "../../services/Storage/storage";
 import ReactLoading from "react-loading";
-const newposts = [
-  {
-    id: 1,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur itaque nihil reiciendis dolore minus possimus rerum dolor culpa excepturi enim.",
-    createdAt: Date.now(),
-    userInfo: {
-      fullname: "Fortan",
-      avatarUrl:
-        "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    likes: 10,
-    comments: 10,
-    shares: 10,
-    postImage:
-      "https://images.unsplash.com/photo-1485970247670-34cd80f5a996?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80",
-  },
-  {
-    id: 2,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur itaque nihil reiciendis dolore minus possimus rerum dolor culpa excepturi enim.",
-    createdAt: Date.now(),
-    userInfo: {
-      fullname: "Fortan",
-      avatarUrl:
-        "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    likes: 10,
-    comments: 10,
-    shares: 10,
-    postImage:
-      "https://images.unsplash.com/photo-1457270508644-1e4905fabd7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80",
-  },
-  {
-    id: 3,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur itaque nihil reiciendis dolore minus possimus rerum dolor culpa excepturi enim.",
-    createdAt: Date.now(),
-    userInfo: {
-      fullname: "Fortan",
-      avatarUrl:
-        "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    likes: 10,
-    comments: 10,
-    shares: 10,
-    postImage:
-      "https://images.unsplash.com/photo-1457270508644-1e4905fabd7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80",
-  },
-  {
-    id: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur itaque nihil reiciendis dolore minus possimus rerum dolor culpa excepturi enim.",
-    createdAt: Date.now(),
-    userInfo: {
-      fullname: "Fortan",
-      avatarUrl: "https://avatar.google.com",
-    },
-    likes: 10,
-    comments: 10,
-    shares: 10,
-    postImage:
-      "https://images.unsplash.com/photo-1457270508644-1e4905fabd7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80",
-  },
-];
+import { ToastContainer, toast as toastFunc } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+import Toast from "../Toast/Toast";
 export default function Posts() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [createPostLoading, setPostLoading] = useState(false);
+  const [toast, setToast] = useState({
+    showToast: false,
+    message: "",
+    type: "",
+    lifetime: 2000,
+  });
   // create a post
   async function createPost(postDto) {
     try {
+      setPostLoading(true);
       let post = {
         description: postDto.description,
       };
@@ -93,12 +39,32 @@ export default function Posts() {
         photoURL: user.photoURL,
         displayName: user.displayName,
       };
-      let postRef = await postRepository.addPost(post);
+      let { ref: postRef, doc } = await postRepository.addPost(post);
+      setPostLoading(false);
       if (!postRef) {
         console.log("Couldn't get postRef");
+        return;
       }
+
+      debugger;
+      setPosts([doc, ...posts]);
+      setToast({
+        ...toast,
+        showToast: true,
+        type: "success",
+        messsage: "Post created succesfully",
+      });
+      toastFunc.info("Post added successfully");
     } catch (err) {
       alert("Couldn't post ", err);
+      setPostLoading(false);
+      setToast({
+        ...toast,
+        showToast: true,
+        type: "error",
+        message: "Couldn't create post",
+      });
+      toastFunc.error("Couldnt't create post");
     }
   }
   const handleButtonClick = (id, type) => {
@@ -125,6 +91,7 @@ export default function Posts() {
       });
     });
   };
+
   useEffect(() => {
     (async function doWorkAsync() {
       setLoading(true);
@@ -145,6 +112,7 @@ export default function Posts() {
     <>
       <div className="posts bg-gray-200 flex flex-col justify-center items-center dark:bg-gray-800">
         {user && <CreatePost createPost={createPost} />}
+        {createPostLoading && <ReactLoading type="spin" color="#000" />}
         {posts.length > 0 ? (
           posts.map((post) => (
             <Post key={post.id} post={post} onActionClick={handleButtonClick} />
