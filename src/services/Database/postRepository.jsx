@@ -16,13 +16,23 @@ class PostRepository {
   }
   async addPost(post) {
     try {
-      const docRef = await addDoc(collection(this.db, "posts"), {
+      let postToBeInserted = {
         ...post,
         createdAt: serverTimestamp(),
-      });
+      };
+      const docRef = await addDoc(
+        collection(this.db, "posts"),
+        postToBeInserted
+      );
 
       console.log("Post written with ID:", docRef.id);
-      return docRef;
+      return {
+        ref: docRef,
+        doc: {
+          ...postToBeInserted,
+          createdAt: { seconds: Math.floor(Date.now() / 1000) },
+        },
+      };
     } catch (error) {
       console.error("Error writing to document", error);
     }

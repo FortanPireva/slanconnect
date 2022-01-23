@@ -9,6 +9,7 @@ import useAuth from "./contexts/useAuth";
 import { NotFound } from "./components/NotFound";
 import ReactLoading from "react-loading";
 import { ResetPassword } from "./components/ResetPassword";
+import { ToastContainer } from "react-toastify";
 function RequireAuth(props) {
   const { user, loading } = useAuth();
 
@@ -24,6 +25,7 @@ function App() {
     <>
       <AuthProvider>
         <Nav></Nav>
+        <ToastContainer position="bottom-right" />
         <Routes>
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Posts />} />
