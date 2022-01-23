@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BiLike } from "react-icons/bi";
 import AppButton from "../AppButton/AppButton";
 import ImagePreviewer from "../FileUploader/ImagePreviewer";
+import VideoPlayer from "../Video/VideoPlayer";
 export default function Post(props) {
   const { post } = props;
   const { onActionClick } = props;
@@ -48,6 +49,7 @@ export default function Post(props) {
           {post.description}
         </div>
         {post.images && <ImagePreviewer imageSources={post.images} />}
+        {post.video && <VideoPlayer src={post.video} type="video/mp4" />}
         <div className="footer flex flex-row justify-between w-full ">
           <AppButton
             onClick={() => onActionClick(post.id, "LIKE")}

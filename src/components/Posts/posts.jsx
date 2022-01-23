@@ -3,7 +3,7 @@ import useAuth from "../../contexts/useAuth";
 import CreatePost from "./createPost";
 import Post from "./post";
 import postRepository from "../../services/Database/postRepository";
-import { uploadImage } from "../../services/Storage/storage";
+import { uploadImage, uploadVideo } from "../../services/Storage/storage";
 import ReactLoading from "react-loading";
 import { ToastContainer, toast as toastFunc } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,6 +23,7 @@ export default function Posts() {
   // create a post
   async function createPost(postDto) {
     try {
+      debugger;
       setPostLoading(true);
       let post = {
         description: postDto.description,
@@ -30,8 +31,13 @@ export default function Posts() {
       post.images = [];
       for (let i = 0; i < postDto.selectedFiles.length; i++) {
         const file = postDto.selectedFiles[i];
-        let downloadUrl = await uploadImage(file);
-        post.images.push(downloadUrl);
+        if (file[0].name.endsWith("mp4")) {
+          let videoDownloadUrl = await uploadVideo(file[0]);
+          post.video = videoDownloadUrl;
+        } else {
+          let downloadUrl = await uploadImage(file);
+          post.images.push(downloadUrl);
+        }
       }
       post.user = {
         uid: user.uid,
@@ -46,7 +52,6 @@ export default function Posts() {
         return;
       }
 
-      debugger;
       setPosts([doc, ...posts]);
       setToast({
         ...toast,
@@ -54,7 +59,8 @@ export default function Posts() {
         type: "success",
         messsage: "Post created succesfully",
       });
-      toastFunc.info("Post added successfully");
+      toastFunc.success("Post added successfully");
+      return true;
     } catch (err) {
       alert("Couldn't post ", err);
       setPostLoading(false);
@@ -65,6 +71,7 @@ export default function Posts() {
         message: "Couldn't create post",
       });
       toastFunc.error("Couldnt't create post");
+      return false;
     }
   }
   const handleButtonClick = (id, type) => {

@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
-import { FcAddImage } from "react-icons/fc";
 export default function FileUploader({
   multiple = false,
   accept,
   onFileChange,
+  FileIcon,
 }) {
   const inputFile = useRef(null);
 
   return (
-    <div className="flex justify-center items-center flex-row">
-      <FcAddImage
+    <div className="flex justify-center items-center flex-row hover:cursor-pointer">
+      <FileIcon
         size="2em"
         className="flex-1"
         onClick={() => inputFile.current.click()}
